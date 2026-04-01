@@ -168,8 +168,7 @@ Time Complexity	Space Complexity
 O(N*K)	O(N*K)
 Code
 C++
-Java
-Python
+
 class Solution {
 public:
 string getHash(string &s)
@@ -183,8 +182,7 @@ string getHash(string &s)
     for(int i = 0; i <26; i++)
     {
        if(freq[i]!=0)
-       hash.append(to_string(freq[i]));
-      
+       hash.append(to_string(freq[i]));    
        hash.append("$");
     }
     return hash;
@@ -199,14 +197,16 @@ vector<vector<string>> groupAnagrams(vector<string>& strs) {
        for (int i = 0; i < strs.size(); i++)
        {
            string key = getHash(strs[i]);
-          
-          
-           mp[key].push_back(strs[i]);
+          mp[key].push_back(strs[i]);
        }
        for(auto x:mp)
        {
            res.push_back(x.second);
        }
        return res;
+          
+       
 }
 };
+
+
