@@ -1,5 +1,5 @@
 🧩 String Compression (LeetCode 443)
-<p align="center"> <img src="https://img.shields.io/badge/LeetCode-443-orange?style=for-the-badge"/> <img src="https://img.shields.io/badge/Difficulty-Medium-yellow?style=for-the-badge"/> <img src="https://img.shields.io/badge/Topic-Strings-blue?style=for-the-badge"/> <img src="https://img.shields.io/badge/Approach-Two%20Pointers-green?style=for-the-badge"/> </p>
+
 📌 Problem Statement
 
 Given an array of characters chars, compress it using the following rules:
