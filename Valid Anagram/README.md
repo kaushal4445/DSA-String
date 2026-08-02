@@ -1,132 +1,734 @@
-🔤 Check if Two Strings are Anagrams
-📌 Problem Statement
+# 🔤 Valid Anagram (LeetCode 242)
 
-Given two strings, check whether they are anagrams of each other.
+## 📌 Problem Statement
 
-👉 Two strings are anagrams if they contain the same characters with the same frequency, but possibly in a different order.
+Given two strings `s` and `t`, return **true** if `t` is an **anagram** of `s`, otherwise return **false**.
 
-🧠 Examples
-✅ Example 1
-Input:  CAT, ACT
-Output: true
-Explanation: Both strings have same characters with same frequency.
-❌ Example 2
-Input:  RULES, LESRT
-Output: false
-Explanation: Frequency of characters does not match.
-🚀 Approach 1: Brute Force (Sorting)
-💡 Idea
+### What is an Anagram?
 
-Sort both strings and compare them character by character.
+An **anagram** is a word or phrase formed by rearranging the letters of another word, using **all the original letters exactly once**.
 
-🔍 Algorithm
+---
 
-If lengths are different → return false
+# 📝 Example 1
 
-Sort both strings
+### Input
 
-Compare each character
+```text
+s = "anagram"
+t = "nagaram"
+```
 
-If all match → return true, else false
+### Output
 
-🧾 Code (C++)
-#include <bits/stdc++.h>
-using namespace std;
+```text
+true
+```
 
-bool CheckAnagrams(string str1, string str2) {
-    if (str1.length() != str2.length()) {
-        return false;
-    }
+### Explanation
 
-    sort(str1.begin(), str1.end());
-    sort(str2.begin(), str2.end());
+Both strings contain the same characters.
 
-    for (int i = 0; i < str1.length(); i++) {
-        if (str1[i] != str2[i]) {
+```
+anagram
+
+↓
+
+Rearrange
+
+↓
+
+nagaram
+```
+
+So the answer is **true**.
+
+---
+
+# 📝 Example 2
+
+### Input
+
+```text
+s = "rat"
+t = "car"
+```
+
+### Output
+
+```text
+false
+```
+
+### Explanation
+
+The characters are different.
+
+```
+rat
+
+↓
+
+Sort
+
+art
+
+car
+
+↓
+
+Sort
+
+acr
+```
+
+Since
+
+```
+art ≠ acr
+```
+
+Return **false**.
+
+---
+
+# 💡 Intuition
+
+Two strings are anagrams if they contain exactly the same characters with the same frequency.
+
+Instead of counting every character manually, we can simply:
+
+1. Check if both strings have the same length.
+2. Sort both strings.
+3. Compare them character by character.
+
+If every character matches after sorting, the strings are anagrams.
+
+---
+
+# ✅ C++ Solution
+
+```cpp
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+
+        if(s.length() != t.length()){
             return false;
         }
-    }
 
-    return true;
+        sort(s.begin(), s.end());
+        sort(t.begin(), t.end());
+
+        for(int i = 0; i < s.length(); i++){
+
+            if(s[i] != t[i]){
+                return false;
+            }
+        }
+
+        return true;
+    }
+};
+```
+
+---
+
+# 🔍 Step-by-Step Explanation
+
+---
+
+# Step 1 : Check Length
+
+```cpp
+if(s.length() != t.length()){
+    return false;
 }
+```
 
-int main() {
-    string Str1 = "INTEGER";
-    string Str2 = "TEGERNI";
+### Why?
 
-    if (CheckAnagrams(Str1, Str2)) {
-        cout << "True" << endl;
-    } else {
-        cout << "False" << endl;
-    }
+If two strings have different lengths, they cannot be anagrams.
 
-    return 0;
-}
-⏱️ Complexity Analysis
-Type	Complexity
-Time	O(N log N)
-Space	O(1)
-⚡ Approach 2: Optimal (Frequency Count)
-💡 Idea
+### Example
 
-Use a frequency array to count characters.
+```
+s = "abc"
 
-🔍 Algorithm
+t = "ab"
+```
 
-If lengths are different → return false
+Lengths
 
-Create array freq[26] = {0}
+```
+3
 
-Increment count for first string
+2
+```
 
-Decrement count for second string
+Different lengths
 
-If all values are 0 → anagram
+↓
 
-🧾 Code (C++)
-#include <bits/stdc++.h>
-using namespace std;
+Return
 
-bool CheckAnagrams(string str1, string str2) {
-    if (str1.length() != str2.length())
-        return false;
+```
+false
+```
 
-    int freq[26] = {0};
+---
 
-    for (int i = 0; i < str1.length(); i++) {
-        freq[str1[i] - 'A']++;
-    }
+# Step 2 : Sort Both Strings
 
-    for (int i = 0; i < str2.length(); i++) {
-        freq[str2[i] - 'A']--;
-    }
+```cpp
+sort(s.begin(), s.end());
+sort(t.begin(), t.end());
+```
 
-    for (int i = 0; i < 26; i++) {
-        if (freq[i] != 0)
-            return false;
-    }
+Sorting arranges characters in alphabetical order.
 
-    return true;
-}
+### Example
 
-int main() {
-    string Str1 = "INTEGER";
-    string Str2 = "TEGERNI";
+Before Sorting
 
-    if (CheckAnagrams(Str1, Str2))
-        cout << "True" << endl;
-    else
-        cout << "False" << endl;
+```
+s = anagram
 
-    return 0;
-}
-⏱️ Complexity Analysis
-Type	Complexity
-Time	O(N)
-Space	O(1)
-🆚 Comparison
-Feature	Brute Force	Optimal
-Approach	Sorting	Frequency Count
-Time	O(N log N) ❌	O(N) ✅
-Space	O(1)	O(1)
-Efficiency	Moderate	Best
+t = nagaram
+```
+
+After Sorting
+
+```
+aaagmnr
+
+aaagmnr
+```
+
+Diagram
+
+```
+Before
+
+anagram
+
+nagaram
+
+      │
+      ▼
+
+After Sorting
+
+aaagmnr
+
+aaagmnr
+```
+
+Now both strings become identical.
+
+---
+
+# Step 3 : Compare Characters
+
+```cpp
+for(int i = 0; i < s.length(); i++)
+```
+
+Compare every character.
+
+---
+
+## First Character
+
+```
+aaagmnr
+
+^
+
+aaagmnr
+
+^
+```
+
+Compare
+
+```
+a == a
+```
+
+✔ Match
+
+---
+
+## Second Character
+
+```
+aaagmnr
+
+ ^
+
+aaagmnr
+
+ ^
+```
+
+Compare
+
+```
+a == a
+```
+
+✔ Match
+
+---
+
+## Third Character
+
+```
+aaagmnr
+
+  ^
+
+aaagmnr
+
+  ^
+```
+
+Compare
+
+```
+a == a
+```
+
+✔ Match
+
+Continue...
+
+Every character matches.
+
+Return
+
+```
+true
+```
+
+---
+
+# 📊 Dry Run
+
+## Input
+
+```text
+s = "anagram"
+
+t = "nagaram"
+```
+
+---
+
+## Step 1
+
+Check Length
+
+```
+8 == 8
+```
+
+Continue.
+
+---
+
+## Step 2
+
+Sort
+
+```
+anagram
+
+↓
+
+aaagmnr
+```
+
+```
+nagaram
+
+↓
+
+aaagmnr
+```
+
+---
+
+## Step 3
+
+Compare
+
+| Index | s | t | Match |
+|------:|:-:|:-:|:-----:|
+|0|a|a|✅|
+|1|a|a|✅|
+|2|a|a|✅|
+|3|g|g|✅|
+|4|m|m|✅|
+|5|n|n|✅|
+|6|r|r|✅|
+
+All characters match.
+
+Return
+
+```
+true
+```
+
+---
+
+# 🎯 Example 2
+
+### Input
+
+```text
+s = "rat"
+
+t = "car"
+```
+
+---
+
+## Step 1
+
+Lengths
+
+```
+3
+
+3
+```
+
+Equal.
+
+---
+
+## Step 2
+
+Sort
+
+```
+rat
+
+↓
+
+art
+```
+
+```
+car
+
+↓
+
+acr
+```
+
+Diagram
+
+```
+art
+
+acr
+```
+
+---
+
+## Step 3
+
+Compare
+
+| Index | s | t | Match |
+|------:|:-:|:-:|:-----:|
+|0|a|a|✅|
+|1|r|c|❌|
+
+Characters are different.
+
+Return
+
+```
+false
+```
+
+---
+
+# 🌟 Visual Explanation
+
+Input
+
+```
+anagram
+
+nagaram
+```
+
+↓
+
+Check Length
+
+```
+Equal
+```
+
+↓
+
+Sort Both Strings
+
+```
+aaagmnr
+
+aaagmnr
+```
+
+↓
+
+Compare
+
+```
+a ✔
+
+↓
+
+a ✔
+
+↓
+
+a ✔
+
+↓
+
+g ✔
+
+↓
+
+m ✔
+
+↓
+
+n ✔
+
+↓
+
+r ✔
+```
+
+↓
+
+Return
+
+```
+true
+```
+
+---
+
+# ❌ Example Where It Fails
+
+Input
+
+```
+hello
+
+world
+```
+
+Sort
+
+```
+ehllo
+
+dlorw
+```
+
+Compare
+
+```
+e
+
+d
+```
+
+Not equal
+
+↓
+
+Return
+
+```
+false
+```
+
+---
+
+# 🎨 Complete Flow Diagram
+
+```
+Input
+
+s
+
+t
+
+      │
+      ▼
+
+Are lengths equal?
+
+├── No
+│
+▼
+Return false
+
+└── Yes
+      │
+      ▼
+
+Sort s
+
+Sort t
+
+      │
+      ▼
+
+Compare every character
+
+      │
+      ▼
+
+All characters same?
+
+├── No
+│
+▼
+Return false
+
+└── Yes
+      │
+      ▼
+
+Return true
+```
+
+---
+
+# ⚖️ Why Sorting Works?
+
+Suppose
+
+```
+listen
+
+silent
+```
+
+Sort both strings.
+
+```
+eilnst
+
+eilnst
+```
+
+Both become exactly the same.
+
+Therefore,
+
+```
+listen
+
+silent
+```
+
+are anagrams.
+
+Another example
+
+```
+triangle
+
+integral
+```
+
+Sort
+
+```
+aegilnrt
+
+aegilnrt
+```
+
+Again, both are identical.
+
+---
+
+# ⏱ Time Complexity
+
+Sorting first string
+
+```
+O(n log n)
+```
+
+Sorting second string
+
+```
+O(n log n)
+```
+
+Comparing characters
+
+```
+O(n)
+```
+
+### Total
+
+```
+O(n log n)
+```
+
+---
+
+# 💾 Space Complexity
+
+No extra data structure is used (ignoring the sorting algorithm).
+
+```
+O(1)
+```
+
+---
+
+# ✅ Key Points
+
+- First check if the lengths are equal.
+- Sort both strings alphabetically.
+- Compare each character one by one.
+- If any character differs, return `false`.
+- If every character matches, return `true`.
+
+---
+
+# 📌 Summary
+
+✔ Check string lengths.
+
+✔ Sort both strings.
+
+✔ Compare character by character.
+
+✔ If all characters match, return `true`.
+
+✔ Otherwise, return `false`.
+
+### Complexity
+
+- **Time Complexity:** `O(n log n)`
+- **Space Complexity:** `O(1)`
